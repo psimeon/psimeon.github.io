@@ -48,25 +48,29 @@ node tests/site.test.cjs
 
 All “Get in touch” links go to the contact section at the bottom of About. The email address there still opens an email draft.
 
-## Later: GitHub Pages and domain migration
+## Hosting and updates
 
-Nothing has been uploaded and no live hosting or DNS settings have been changed.
+Repository: https://github.com/psimeon/psimeon.github.io
 
-1. Export and back up the WordPress installation and media before retiring it. This local redesign is not a complete WordPress backup.
-2. Create a GitHub repository and push these files when the design is approved.
-3. In Settings → Pages, publish from the `main` branch and root folder. `.nojekyll` enables plain static files.
-4. Verify domain ownership in GitHub, then set the Pages custom domain to `paulsimeon.com`. The included `CNAME` file contains that domain.
-5. Update the domain's website DNS records to GitHub Pages. Preserve unrelated records, including email records. Configure `www` to point to the account's `<username>.github.io` hostname.
-6. Enable HTTPS after GitHub has provisioned the certificate, and check all pages and redirects on the live domain.
+GitHub Pages publishes the root of the `main` branch. The custom domain is `paulsimeon.com`; its website DNS must point to GitHub Pages before the new site appears there. The 2026 WordPress snapshot is preserved in `archives/2026/` and can be opened offline.
 
-Follow the current [GitHub custom-domain instructions](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site) at launch. A domain registrar transfer is not needed to change website hosting. Custom-domain configuration must precede the DNS cutover. The GitHub username and repository are intentionally left undecided until upload.
+After editing, rebuild the search index and run the checks above, then commit and push to `main`. GitHub Pages deploys the update automatically.
+
+### Domain migration status — November 5, 2026
+
+The initial GitHub deployment succeeded. HostMonster DNS still requires the website cutover. Current website A record: `67.20.76.217`. Current `www` CNAME: `paulsimeon.com`.
+
+GitHub Pages requires apex A records `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, and `185.199.111.153`; `www` should be a CNAME to `psimeon.github.io`.
+
+Preserve mail service during the cutover. `mail.paulsimeon.com` currently has its own A record at `67.20.76.217`. MX records are priority 0 `mail.paulsimeon.com` and priority 10 `paulsimeon.com`. The latter depends on the website address and needs review before changing the apex A records. Leave the primary mail host and unrelated DNS records intact. Do not retire WordPress/HostMonster until web and mail behavior have been checked. This archive is not a WordPress database backup.
+
+Enable enforced HTTPS once GitHub provisions the custom-domain certificate. Follow the current [GitHub domain instructions](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site).
 
 ## Validation of this draft
 
-- All 6 HTML documents (including the 404 page) have one main heading.
-- All 88 local references on the five main pages resolve, including all six contact links and search/theme scripts.
+- Local file links and assets on all six HTML pages resolve.
 - All content images have alternative text.
 - JavaScript passes `node --check`.
 - The local homepage returned HTTP 200.
 - Search matching, result destinations, and initial theme restoration pass automated checks.
-- Firefox access was not approved for browser verification; visual layout and dialog/toggle keyboard interactions still need browser review.
+- The published homepage was verified in a browser after the initial GitHub deployment.
