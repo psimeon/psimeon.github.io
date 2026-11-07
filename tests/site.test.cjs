@@ -46,3 +46,13 @@ test('theme defaults to light, restores dark, and tolerates blocked storage', ()
   vm.runInNewContext(source('theme.js'), { document: doc, localStorage: { getItem() { throw Error('Storage unavailable'); } } });
   assert.equal(doc.documentElement.dataset.theme, 'light');
 });
+
+
+test('homepage uses a single Research heading without the retired slogan', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const section = html.match(/<section[^>]*id="research-overview"[^>]*>([\s\S]*?)<\/section>/)[1];
+  assert.match(section, /<div class="section-heading"><h2>Research<\/h2><p>/);
+  assert.doesNotMatch(section, /Small particles|Very big questions|class="eyebrow"/);
+  const homepage = context.window.SITE_SEARCH_INDEX.find(entry => entry.url === 'index.html');
+  assert.doesNotMatch(homepage.keywords, /Small particles|Very big questions/);
+});

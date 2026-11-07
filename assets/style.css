@@ -46,7 +46,7 @@ nav a[aria-current]{color:var(--accent);text-decoration:underline;text-underline
 .hero-bottom a:hover{color:var(--accent)}
 .hero-bottom a span{margin-left:18px}
 .section{padding-block:91px}
-.section-heading{display:grid;grid-template-columns:.6fr 1.1fr 1fr;gap:40px;align-items:start;margin-bottom:52px}
+.section-heading{display:grid;grid-template-columns:23.5% 1fr;gap:0;align-items:start;margin-bottom:52px}
 .section-heading .eyebrow{padding-top:10px;color:var(--green)}
 h2{font-family:var(--serif);font-size:39px;line-height:1.2;letter-spacing:-.9px;font-weight:400}
 .section-heading>p:last-child{color:var(--muted);font-size:15px;line-height:1.8;padding-top:5px}
