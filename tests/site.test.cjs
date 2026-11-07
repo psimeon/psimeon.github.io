@@ -56,3 +56,11 @@ test('homepage uses a single Research heading without the retired slogan', () =>
   const homepage = context.window.SITE_SEARCH_INDEX.find(entry => entry.url === 'index.html');
   assert.doesNotMatch(homepage.keywords, /Small particles|Very big questions/);
 });
+
+
+test('research heading keeps two desktop columns and stacks on mobile', () => {
+  const css = source('style.css');
+  const columns = [...css.matchAll(/\.section-heading\{[^}]*grid-template-columns:([^;}]+)/g)]
+    .map(match => match[1]);
+  assert.deepEqual(columns, ['23.5% 1fr', '1fr']);
+});
